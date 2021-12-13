@@ -1,0 +1,14 @@
+Scenario.name = StatefulMovement
+Scenario.endTime = 36000
+Scenario.updateInterval = .1
+Scenario.simulateConnections = false
+MovementModel.worldSize = 1500,1500
+Report.nrofReports = 0
+Events.nrof = 0
+
+Scenario.nrofHostGroups = 1
+Group1.groupID = Nodes
+Group1.nrofHosts = 500
+Group1.nrofInterfaces = 0
+Group1.movementModel = StateMovement
+Group1.router = PassiveRouter
