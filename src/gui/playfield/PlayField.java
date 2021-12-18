@@ -38,6 +38,7 @@ public class PlayField extends JPanel {
 	private List<PlayFieldGraphic> overlayGraphics;
 	private boolean autoClearOverlay;	// automatically clear overlay graphics
 	private MapGraphic mapGraphic;
+	private FMIGraphic fmiGraphic;
 	private boolean showMapGraphic;
 	private ScaleReferenceGraphic refGraphic;
 	private boolean focusOnClick;
@@ -61,15 +62,16 @@ public class PlayField extends JPanel {
 
 		this.refGraphic = new ScaleReferenceGraphic();
 		updateFieldSize();
-        this.setBackground(bgColor);
-        this.overlayGraphics = Collections.synchronizedList(
-		new ArrayList<PlayFieldGraphic>());
-        this.mapGraphic = null;
-        this.underlayImage = null;
-        this.imageTransform = null;
-        this.autoClearOverlay = true;
+		this.setBackground(bgColor);
+		this.overlayGraphics = Collections.synchronizedList(
+				new ArrayList<PlayFieldGraphic>());
+		this.mapGraphic = null;
+		this.underlayImage = null;
+		this.imageTransform = null;
+		this.autoClearOverlay = true;
+		this.fmiGraphic = new FMIGraphic();
 
-        this.addMouseListener(new MouseAdapter() {
+		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (focusOnClick) {
@@ -77,7 +79,11 @@ public class PlayField extends JPanel {
 				}
 			}
 		});
+
+
+
 	}
+
 
 	/**
 	 * Schedule the play field to be drawn
@@ -223,6 +229,10 @@ public class PlayField extends JPanel {
 		// draw map (is exists and drawing requested)
 		if (mapGraphic != null && showMapGraphic) {
 			mapGraphic.draw(g2);
+		}
+
+		if (fmiGraphic != null) {
+			fmiGraphic.draw(g2);
 		}
 
 		// draw hosts
