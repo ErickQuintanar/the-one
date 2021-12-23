@@ -33,6 +33,12 @@ extends MovementModel {
   // Implementation
   //==========================================================================//
   @Override
+  public int getState(){
+    return this.state;
+  }
+
+
+  @Override
   public Coord getInitialLocation() {
     //Location at the first exit
     this.location = new Coord(670,830);
@@ -64,18 +70,23 @@ extends MovementModel {
     int roomType = stateRandom.nextInt(100); // Uniform distribution, ranges represent probability
     if(roomType < 60){
       this.state = 120; // RX
+        setState(this.state);
       return findRoom();
     }else if(roomType < 70){
       this.state = 123; // HS1
+        setState(this.state);
       return new Coord(575 + locationNoise.nextInt(150) - 75,925 + locationNoise.nextInt(150) - 75);
     }else if(roomType < 75){
       this.state = 124; // HS2
+        setState(this.state);
       return new Coord(315 + locationNoise.nextInt(70) - 35,730 + locationNoise.nextInt(70) - 35);
     }else if(roomType < 80){
       this.state = 125; // HS3
+        setState(this.state);
       return new Coord(315 + locationNoise.nextInt(70) - 35,545 + locationNoise.nextInt(70) - 35);
     }else{
       this.state = 122; // Magistrale
+        setState(this.state);
       return new Coord(500 + locationNoise.nextInt(300) - 150,450 + locationNoise.nextInt(800) - 400);
     }
   }

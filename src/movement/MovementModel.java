@@ -61,6 +61,9 @@ public abstract class MovementModel {
 	private int maxX;
 	private int maxY;
 
+	//adding state support
+	private int state;
+
 	protected ModuleCommunicationBus comBus;
 
 	// static initialization of all movement models' random number generator
@@ -149,8 +152,11 @@ public abstract class MovementModel {
 		this.maxY = mm.maxY;
 		this.ah = mm.ah;
 		this.comBus = null;
+		this.state = mm.state;
 	}
-
+	//return current state to control spread prob
+	public int getState(){return this.state;}
+	public void setState(int state){this.state= state;}
 	/**
 	 * Returns the largest X coordinate value this model uses
 	 * @return Maximum of X coordinate values

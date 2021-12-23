@@ -25,6 +25,12 @@ public class DTNHost implements Comparable<DTNHost> {
 	private Coord location; 	// where is the host
 	private Coord destination;	// where is it going
 
+	//new host variables//
+	private boolean isInfected;
+	private int state;//room type
+	private String maskType;
+	//end of new host variables//
+
 	private MessageRouter router;
 	private MovementModel movement;
 	private Path path;
@@ -37,10 +43,17 @@ public class DTNHost implements Comparable<DTNHost> {
 	private List<NetworkInterface> net;
 	private ModuleCommunicationBus comBus;
 
+	public String getGroupId(){
+		return this.groupId;
+	}
+
 	static {
 		DTNSim.registerForReset(DTNHost.class.getCanonicalName());
 		reset();
 	}
+
+
+
 	/**
 	 * Creates a new DTNHost.
 	 * @param msgLs Message listeners
@@ -55,11 +68,14 @@ public class DTNHost implements Comparable<DTNHost> {
 			List<MovementListener> movLs,
 			String groupId, List<NetworkInterface> interf,
 			ModuleCommunicationBus comBus,
-			MovementModel mmProto, MessageRouter mRouterProto) {
+			MovementModel mmProto, MessageRouter mRouterProto, String maskType) {
 		this.comBus = comBus;
 		this.location = new Coord(0,0);
 		this.address = getNextAddress();
 		this.groupId = groupId;
+		if(groupId.equals("sickNodes")){setIsInfected(true);}
+		else{setIsInfected(false);}
+		this.maskType = maskType;
 		this.name = groupId+address;
 		this.net = new ArrayList<NetworkInterface>();
 
@@ -82,15 +98,31 @@ public class DTNHost implements Comparable<DTNHost> {
 		setRouter(mRouterProto.replicate());
 
 		this.location = movement.getInitialLocation();
-
 		this.nextTimeToMove = movement.nextPathAvailable();
 		this.path = null;
-
+		setState(movement.getState());
 		if (movLs != null) { // inform movement listeners about the location
 			for (MovementListener l : movLs) {
 				l.initialLocation(this, this.location);
 			}
 		}
+	}
+
+	public String getMaskType(){
+		return this.maskType;
+	}
+
+	public int getState(){
+		return this.state;
+	}
+	public void setState(int state){
+		this.state = state;
+	}
+	public boolean getIsInfected(){
+		return this.isInfected;
+	}
+	public void setIsInfected(boolean isInfected){
+		this.isInfected =isInfected;
 	}
 
 	/**
@@ -167,6 +199,7 @@ public class DTNHost implements Comparable<DTNHost> {
 	 * @param con  The connection object whose state changed
 	 */
 	public void connectionUp(Connection con) {
+		setState(movement.getState());
 		this.router.changedConnection(con);
 	}
 
@@ -212,6 +245,7 @@ public class DTNHost implements Comparable<DTNHost> {
 	 */
 	public void setLocation(Coord location) {
 		this.location = location.clone();
+
 	}
 
 	/**

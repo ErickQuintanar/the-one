@@ -19,6 +19,7 @@ import core.SimClock;
 import core.SimError;
 import core.SimScenario;
 
+
 /**
  * Abstract superclass for all reports. All settings defined in this class
  * can be used for all Report classes. Some reports don't implement intervalled
@@ -27,6 +28,7 @@ import core.SimScenario;
  * implementations are always report specific.
  */
 public abstract class Report {
+
 	/** Name space of the settings that are common to all reports ({@value}). */
 	public static final String REPORT_NS = "Report";
 	/** The interval (simulated seconds) of creating new settings files
@@ -42,7 +44,7 @@ public abstract class Report {
 	public static final int DEF_PRECISION = 4;
 	/** The default output directory of reports (can be overridden per report
 	 * with {@link Report#OUTPUT_SETTING}) -setting id ({@value})*/
-	public static final String REPORTDIR_SETTING = "Report.reportDir";
+	public static final String REPORTDIR_SETTING = "Report.output";
 	/** Warm up period -setting id ({@value}). Defines how many seconds from
 	 *  the beginning of the simulation should not be included in the reports.
 	 *  Implementation of the feature is report specific, so check out the
@@ -61,6 +63,7 @@ public abstract class Report {
 	private int precision;
 	protected int warmupTime;
 	protected Set<String> warmupIDs;
+	protected int nodeState;
 
 	private int lastOutputSuffix;
 	private double outputInterval;
@@ -78,6 +81,7 @@ public abstract class Report {
 		this.lastOutputSuffix = 0;
 		this.outputInterval = -1;
 		this.warmupIDs = null;
+		this.nodeState = 121;
 
 		Settings settings = new Settings();
 		scenarioName = settings.valueFillString(settings.getSetting(
@@ -206,7 +210,7 @@ public abstract class Report {
 	private void createSuffixedOutput(String outFileName) {
 		String suffix = String.format(INTERVALLED_FORMAT,
 				this.lastOutputSuffix);
-		createOutput(outFileName+suffix);
+		createOutput(getSettings()+outFileName+suffix);
 		this.lastOutputSuffix++;
 	}
 

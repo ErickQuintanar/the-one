@@ -50,5 +50,5 @@ public class ConnectionEvent extends ExternalEvent {
 	public String toString() {
 		return "CONN " + (isUp ? "up" : "down") + " @" + this.time + " " +
 				this.fromAddr+"<->"+this.toAddr;
-	}
+	}//check this
 }

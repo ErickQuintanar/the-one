@@ -14,6 +14,13 @@ import java.util.Set;
  * A message that is created at a node or passed between nodes.
  */
 public class Message implements Comparable<Message> {
+
+	/*
+	 * The message only needs be sent if there is condition met
+	 *  This condition will be set using this parameter that will
+	 */
+	public double send;
+
 	/** Value for infinite TTL of message */
 	public static final int INFINITE_TTL = -1;
 	private DTNHost from;

@@ -25,6 +25,9 @@ public class SimScenario implements Serializable {
 	/** a way to get a hold of this... */
 	private static SimScenario myinstance=null;
 
+	//adding maskType
+	public static final String MASK_TPYE = "maskType";
+
 	/** namespace of scenario settings ({@value})*/
 	public static final String SCENARIO_NS = "Scenario";
 	/** number of host groups -setting id ({@value})*/
@@ -330,6 +333,7 @@ public class SimScenario implements Serializable {
 			int nrofHosts = s.getInt(NROF_HOSTS_S);
 			int nrofInterfaces = s.getInt(NROF_INTERF_S);
 			int appCount;
+			String maskType = s.getSetting(MASK_TPYE);
 
 			// creates prototypes of MessageRouter and MovementModel
 			MovementModel mmProto =
@@ -397,7 +401,7 @@ public class SimScenario implements Serializable {
 				// new instances of movement model and message router
 				DTNHost host = new DTNHost(this.messageListeners,
 						this.movementListeners,	gid, interfaces, comBus,
-						mmProto, mRouterProto);
+						mmProto, mRouterProto, maskType);
 				hosts.add(host);
 			}
 		}

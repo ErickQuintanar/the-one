@@ -19,6 +19,7 @@ public class EpidemicRouter extends ActiveRouter {
 	 */
 	public EpidemicRouter(Settings s) {
 		super(s);
+		deleteDelivered = true;
 		//TODO: read&use epidemic router specific settings (if any)
 	}
 
@@ -28,6 +29,7 @@ public class EpidemicRouter extends ActiveRouter {
 	 */
 	protected EpidemicRouter(EpidemicRouter r) {
 		super(r);
+
 		//TODO: copy epidemic settings here (if any)
 	}
 
